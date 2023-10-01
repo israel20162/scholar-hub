@@ -29,7 +29,7 @@
 
 
 
-                        <button x-data type="button" x-on:click="isShowing = ! isShowing"
+                        <button x-data type="button" wire:click="$dispatch('start')" x-on:click="isShowing = ! isShowing"
                             class="block text-center mx-auto bg-indigo-600 dark:bg-indigo-500 text-white py-2 px-6 rounded hover:bg-indigo-700 dark:hover:bg-indigo-600">
                             Start Quiz
                         </button>

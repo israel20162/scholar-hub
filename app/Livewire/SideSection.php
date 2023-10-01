@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class ForumSideSection extends Component
+class SideSection extends Component
 {
     public function render()
     {
-        return view('livewire.forum-side-section');
+        return view('livewire.side-section');
     }
 }

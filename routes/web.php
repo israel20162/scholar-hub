@@ -4,6 +4,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\NotesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
 /*
@@ -39,6 +40,15 @@ Route::controller(QuizController::class)->group(function () {
     Route::get('/quizzes', 'index')->name('quizzes');
     Route::get('/quizzes/create', 'createQuiz')->name('quiz.create');
     Route::get('/quizzes/{id?}', 'single')->name('quiz.single');
+});
+
+Route::controller(NotesController::class)->group(function () {
+    Route::get('/notes', 'index')->name('notes');
+    Route::get('/notes/upload', 'uploadNote')->name('note.upload');
+
+    Route::get('/notes/{note}/download',  'downloadNote')->name('note.download');
+    Route::get('/notes/create', 'createNote')->name('note.create');
+    Route::get('/notes/{id?}', 'single')->name('note.single');
 });
 
 

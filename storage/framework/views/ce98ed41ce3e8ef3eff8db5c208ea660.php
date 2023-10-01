@@ -16,7 +16,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('forums');
 
-$__html = app('livewire')->mount($__name, $__params, 'koCPOux', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'XOYzP6w', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -27,16 +27,16 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
         </div>
-      
+
         <div class="col-span-1">
   
        <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('forum-side-section');
+[$__name, $__params] = $__split('side-section');
 
-$__html = app('livewire')->mount($__name, $__params, 'KzydFLF', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'tKhCBlu', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -47,7 +47,7 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
         </div>
-      
+
     </div>
 
  <?php echo $__env->renderComponent(); ?>

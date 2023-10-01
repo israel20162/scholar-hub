@@ -40,6 +40,7 @@ class ChatForm extends Component
     public function sendMessage()
     {
 
+
         $user = Auth::user();
 
         $message = Message::create([
@@ -47,14 +48,15 @@ class ChatForm extends Component
             'from_id' => $user->id,
             'to_id' => $this->to_id
         ]);
+
+
         $this->messages[] = $message;
         // dd($message);
         // $this->dispatch('update',$message);
 
-       MessageSent::dispatch($message);
+      MessageSent::dispatch($message);
 
 
-        // broadcast(new MessageSent($this->message))->toOthers();
 
 
         //event(new MessageSent('Your message content here'));

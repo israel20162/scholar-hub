@@ -7,7 +7,7 @@
 
         <div class="col-span-1">
             {{-- side section --}}
-            @livewire('forum-side-section')
+            @livewire('side-section')
         </div>
     </div>
 

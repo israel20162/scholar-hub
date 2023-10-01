@@ -9,14 +9,14 @@
 <?php $component->withAttributes([]); ?>
     <div class="grid md:grid-cols-4  overflow-x-clip">
         <div class="col-span-3 overflow-y-scroll md:border-r dark:border-gray-700 ">
-           <!-- Topics Page -->
-  <?php
+            <!-- Topics Page -->
+            <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
 [$__name, $__params] = $__split('topic.topics');
 
-$__html = app('livewire')->mount($__name, $__params, 'guFrJ85', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'YlO6bF7', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -34,9 +34,9 @@ if (isset($__slots)) unset($__slots);
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('forum-side-section');
+[$__name, $__params] = $__split('side-section');
 
-$__html = app('livewire')->mount($__name, $__params, 'cJn8Kcu', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'K1tIKA3', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -54,6 +54,4 @@ if (isset($__slots)) unset($__slots);
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
 <?php endif; ?>
-
-
 <?php /**PATH C:\Users\israel\Desktop\scholar-hub\resources\views/topic/index.blade.php ENDPATH**/ ?>

@@ -4,10 +4,10 @@
             @livewire('quiz.view-quiz-post', ['quizId' => $quizId])
         </div>
 
-            <div class="col-span-1">
+        <div class="col-span-1">
 
-                @livewire('forum-side-section')
-            </div>
+            @livewire('side-section')
         </div>
+    </div>
 
 </x-app-layout>

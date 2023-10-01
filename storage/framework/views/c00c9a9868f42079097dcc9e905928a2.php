@@ -9,13 +9,13 @@
 <?php $component->withAttributes([]); ?>
     <div class="grid md:grid-cols-4  overflow-x-clip">
         <div class="col-span-3 overflow-y-scroll md:border-r dark:border-gray-700 ">
-<?php
+            <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
 [$__name, $__params] = $__split('quiz.quizzes');
 
-$__html = app('livewire')->mount($__name, $__params, '1iZkAGn', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, '51ocQHA', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -33,9 +33,9 @@ if (isset($__slots)) unset($__slots);
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('forum-side-section');
+[$__name, $__params] = $__split('side-section');
 
-$__html = app('livewire')->mount($__name, $__params, 'L8muGPo', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'ZDcmJ4U', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 

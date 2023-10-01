@@ -24,6 +24,9 @@
                     <x-nav-link href="{{ route('quizzes') }}" :active="request()->routeIs('quizzes', 'quiz.single', 'quiz.create')">
                         {{ __('Quizzes') }}
                     </x-nav-link>
+                     <x-nav-link href="{{ route('notes') }}" :active="request()->routeIs('notes', 'notes.single', 'notes.create')">
+                        {{ __('Notes') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -131,6 +134,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('topics') }}" :active="request()->routeIs('topics', 'topic.single', 'topic.create')">
                 {{ __('Topics') }}
+            </x-responsive-nav-link>
+               <x-responsive-nav-link href="{{ route('quizzes') }}" :active="request()->routeIs('quizzes', 'quiz.single', 'quiz.create')">
+                {{ __('Quizzes') }}
             </x-responsive-nav-link>
         </div>
 

@@ -2,7 +2,7 @@
 
 
     <div id="countdown" class="dark:text-white font-bold text-lg">
-        Time left: <span id="timer">10:00</span>
+        Time left: <span id="timer">{{$initialMinutes}}:00</span>
     </div>
 
                                         <button @click="open = true" class="bg-red-600 text-white p-1.5 rounded">Stop
@@ -25,10 +25,10 @@
                                         </template>
 
     @push('scripts')
-        <script>
+        <script >
 
-
-   const countdownMinutes = {{$initialMinutes}};
+document.addEventListener('start', () => {
+    const countdownMinutes = {{$initialMinutes}};
 
             let currentTime = countdownMinutes * 60;
             const countdownDisplay = document.getElementById('timer');
@@ -53,6 +53,9 @@
 
             // Update the countdown every second
             const countdownInterval = setInterval(updateCountdown, 1000);
+
+
+})
 
 
 

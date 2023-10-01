@@ -16,7 +16,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('topic.view-topic-post', ['topicId' => $topicId]);
 
-$__html = app('livewire')->mount($__name, $__params, 'Cwb9qIg', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'gT3vJDW', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -34,9 +34,9 @@ if (isset($__slots)) unset($__slots);
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('forum-side-section');
+[$__name, $__params] = $__split('side-section');
 
-$__html = app('livewire')->mount($__name, $__params, '3HimIEM', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'v7vud9h', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 

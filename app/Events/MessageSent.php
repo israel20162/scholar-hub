@@ -29,11 +29,11 @@ class MessageSent implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return Channel|array
+     * @return Channel|string
      */
     public function broadcastOn()
     {
-        return new Channel('chat.'.$this->message->from_id);
+        return new Channel('chat.12');
     }
 
     /**
