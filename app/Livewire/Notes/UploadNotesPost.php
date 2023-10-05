@@ -22,7 +22,7 @@ class UploadNotesPost extends Component
         ]);
         if ($this->note_pdf) {
 
-            $filePath = $this->note_pdf->store('notes','public');
+            $filePath = $this->note_pdf->store('app/notes','public');
         }
         Note::create([
             'user_id' => auth()->id(),

@@ -31,11 +31,16 @@
             <main>
                 {{ $slot }}
             </main>
+            <x-footer/>
         </div>
 
         @stack('modals')
          @stack('scripts')
-
+<script>
+    window.addEventListener('livewire:navigated', () => {
+    window.scrollTo({ top: 0 });
+});
+</script>
 
         @livewireScripts
     </body>

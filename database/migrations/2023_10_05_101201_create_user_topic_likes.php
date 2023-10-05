@@ -11,20 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('topics', function (Blueprint $table) {
-            $table->id();
+        Schema::create('user_topic_likes', function (Blueprint $table) {
+            $table->unsignedBigInteger('topic_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('title');
-            $table->string('body');
-           // $table->json('categories');
-            $table->string('image_path')->nullable();
-
-            $table->string('slug')->unique()->nullable();
-
-
-
-
             $table->timestamps();
+
+            $table->unique(['topic_id', 'user_id']);
+
+            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -34,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('user_topic_likes');
     }
 };

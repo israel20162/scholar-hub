@@ -35,7 +35,7 @@
         <ul class="divide-y divide-gray-200 dark:divide-gray-700">
             @foreach ($posts as $post)
                 <li class="py-6">
-                    <div class="flex justify-between">
+                    <div class="flex capitalize justify-between">
                         <!-- Thread Title -->
                         <a href="{{ route('forum.single', ['id' => $post->id]) }}"
                             class="text-xl text-gray-900 dark:text-gray-100 hover:underline">{{ $post->title }}</a>

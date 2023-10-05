@@ -4,6 +4,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\NotesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
@@ -17,11 +18,11 @@ use Illuminate\Support\Facades\Broadcast;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return view('home');
-})->name('home');
 
 
+Route::controller(MainController::class)->group(function () {
+    Route::get('/','homePage')->name('home');
+});
 
 Route::controller(ForumController::class)->group(function () {
     Route::get('/forums', 'index')->name('forums');
@@ -46,7 +47,7 @@ Route::controller(NotesController::class)->group(function () {
     Route::get('/notes', 'index')->name('notes');
     Route::get('/notes/upload', 'uploadNote')->name('note.upload');
 
-    Route::get('/notes/{note}/download',  'downloadNote')->name('note.download');
+    Route::get('/notes/{note}/download',  'download')->name('note.download');
     Route::get('/notes/create', 'createNote')->name('note.create');
     Route::get('/notes/{id?}', 'single')->name('note.single');
 });

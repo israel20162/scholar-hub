@@ -30,8 +30,8 @@
 
         <!-- Call to Action Buttons -->
         <div class="flex space-x-4">
-            <a href="/explore" class="bg-white text-indigo-600 hover:bg-indigo-800 hover:text-white py-2 px-6 rounded-full font-semibold transition">Explore Topics</a>
-            <a href="/join" class="bg-transparent border-2 border-white py-2 px-6 rounded-full hover:bg-indigo-800 hover:border-indigo-800 hover:text-white font-semibold transition">Join Now</a>
+            <a wire:navigate wire:navigate href="/topics" class="bg-white text-indigo-600 hover:bg-indigo-800 hover:text-white py-2 px-6 rounded-full font-semibold transition">Explore Topics</a>
+            <a wire:navigate href="/register" class="bg-transparent border-2 border-white py-2 px-6 rounded-full hover:bg-indigo-800 hover:border-indigo-800 hover:text-white font-semibold transition">Join Now</a>
         </div>
 
     </div>
@@ -48,19 +48,21 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <!-- Single Topic (Repeat for each topic) -->
-            <div class="topic bg-gray-100 dark:bg-black p-6 rounded-lg transition-shadow duration-500 hover:shadow-lg">
+           <?php $__currentLoopData = $topics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+ <div class="topic relative bg-gray-100 dark:bg-black p-6 rounded-lg transition-shadow duration-500 hover:shadow-lg">
                 <!-- Topic Title -->
-                <a href="/topic-link" class="text-xl text-gray-900 dark:text-white hover:underline mb-4 block">Topic Title</a>
+                <a wire:navigate href="<?php echo e(route('topic.single', ['id' => $topic->id])); ?>" class="text-xl text-gray-900 dark:text-white hover:underline mb-4 block"><?php echo e($topic->title); ?></a>
 
                 <!-- Topic Details -->
-                <p class="text-sm text-gray-600 dark:text-white mb-4">Brief description or snippet of the topic to give users an idea...</p>
+                <p class="text-sm text-gray-600 line-clamp-3 whitespace-normal dark:text-white mb-4"><?php echo e($topic->body); ?></p>
 
                 <!-- Topic Metadata -->
-                <div class="flex justify-between items-center text-xs text-gray-600 dark:text-white">
-                    <span>By Jane Doe</span>
-                    <span>45 comments</span>
+                <div class="flex justify-between absolute bottom-3 capitalize items-center text-xs text-gray-600 dark:text-white">
+                    <span >By <span class="hover:text-indigo-600 text-indigo-500 hover:cursor-pointer"><?php echo e($topic->user->name); ?></span></span>
+                    
                 </div>
             </div>
+           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             <!-- Repeat the above block for additional trending topics -->
 
@@ -68,59 +70,50 @@
 
         <!-- View All Topics Button -->
         <div class="text-center mt-12">
-            <a href="/all-topics" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition">View All Topics</a>
+            <a wire:navigate href="/topics" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition">View All Topics</a>
         </div>
 
     </div>
 </section>
 
-<!-- Latest Contributions Section -->
+<!-- Latest quiz Section -->
 <section class="bg-gray-100 dark:bg-slate-950 dark:text-white py-12">
     <div class="container mx-auto px-4">
 
         <!-- Section Heading -->
-        <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Latest Contributions</h2>
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Latest Quizzes</h2>
 
-        <!-- Contributions Grid -->
+        <!-- Quiz Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <!-- Single Contribution (Repeat this block for each contribution) -->
-            <div class="bg-white dark:bg-black dark:text-white p-6 rounded-lg shadow-md">
+           <?php $__currentLoopData = $quizzes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $quiz): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+ <div class="bg-white dark:bg-black dark:text-white p-6 rounded-lg shadow-md">
                 <!-- Contribution Title -->
-                <h3 class="text-xl font-semibold mb-3">Topic or Contribution Title</h3>
+                <a wire:navigate href="<?php echo e(route('quiz.single', ['id' => $quiz->id])); ?>" class="text-xl  capitalize hover:underline font-semibold mb-5"><?php echo e($quiz->title); ?></a>
 
                 <!-- Contributor Info -->
-                <div class="flex items-center mb-4">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80" alt="" class="w-10 h-10 rounded-full mr-3">
-                    <span class="text-gray-600 dark:text-indigo-600 dark:hover:text-indigo-700">By John Doe</span>
+                <div class="flex items-center cursor-pointer mb-4">
+                    <img src="<?php echo e($quiz->user->profile_photo_url); ?>" alt="" class="w-10 h-10 rounded-full mr-3">
+                    <span> </span><span class="text-gray-600 dark:text-indigo-600 pl-2 dark:hover:text-indigo-700 capitalize"> <?php echo e($quiz->user->name); ?></span>
                 </div>
 
-                <!-- Contribution Snippet or Description -->
-                <p class="text-gray-700 dark:text-white mb-4">
-                    A brief snippet or description of the contribution, ideally not more than two lines or so...
-                </p>
+                 <div class="mb-4 text-gray-700 dark:text-gray-300">
+                            <p class="flex items-center space-x-2  ">
+                                
+                                <span><strong>No. of Questions:</strong> <span
+                                        class="text-indigo-600 font-bold text-lg"><?php echo e(count(json_decode($quiz->quiz))); ?></span></span>
+                                <span><strong>Time Limit:</strong> <span
+                                        class="text-indigo-600 font-bold text-lg"><?php echo e($quiz->time_limit); ?>
+
+                                        minutes</span></span>
+                            </p>
+                        </div>
 
                 <!-- Read More Link -->
-                <a href="/link-to-full-contribution" class="text-indigo-600 hover:text-indigo-800 transition">Read more &rarr;</a>
+                <a wire:navigate href="<?php echo e(route('quiz.single', ['id' => $quiz->id])); ?>" class="text-indigo-600 hover:text-indigo-800 transition">View Quiz &rarr;</a>
             </div>
-            <div class="bg-white dark:bg-black dark:text-white p-6 rounded-lg shadow-md">
-                <!-- Contribution Title -->
-                <h3 class="text-xl font-semibold mb-3">Topic or Contribution Title</h3>
-
-                <!-- Contributor Info -->
-                <div class="flex items-center mb-4">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80" alt="" class="w-10 h-10 rounded-full mr-3">
-                    <span class="text-gray-600 dark:text-indigo-600 dark:hover:text-indigo-700">By John Doe</span>
-                </div>
-
-                <!-- Contribution Snippet or Description -->
-                <p class="text-gray-700 dark:text-white mb-4">
-                    A brief snippet or description of the contribution, ideally not more than two lines or so...
-                </p>
-
-                <!-- Read More Link -->
-                <a href="/link-to-full-contribution" class="text-indigo-600 hover:text-indigo-800 transition">Read more &rarr;</a>
-            </div>
+           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             <!-- Repeat above block for other contributions -->
 
@@ -128,7 +121,7 @@
 
         <!-- See All Contributions Button -->
         <div class="text-center mt-8">
-            <a href="/all-contributions" class="dark:bg-indigo-600 dark:text-white  px-6 py-3 rounded-full hover:bg-indigo-700 transition">See All Contributions</a>
+            <a wire:navigate href="/quizzes" class="dark:bg-indigo-600 dark:text-white  px-6 py-3 rounded-full hover:bg-indigo-700 transition">See All Quizzes</a>
         </div>
     </div>
 </section>
@@ -144,7 +137,7 @@
         <p class="text-xl md:text-2xl mb-8">Contribute explanations, quizzes, or ideas and collaborate with thousands of fellow students.</p>
 
         <!-- CTA Button -->
-        <a href="/contribute" class="bg-white text-indigo-700 dark:bg-indigo-600 dark:text-white px-8 py-4 rounded-full hover:bg-gray-200 transition">Start Contributing Now</a>
+        <a wire:navigate href="/register" class="bg-white text-indigo-700 dark:bg-indigo-600 dark:text-white px-8 py-4 rounded-full hover:bg-gray-200 transition">Start Contributing Now</a>
 
     </div>
 </section>
@@ -157,26 +150,29 @@
 
         <!-- Discussion List -->
         <ul class="divide-y divide-gray-200 dark:divide-gray-800">
+<?php $__currentLoopData = $forumPosts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+ <li class="py-6">
 
-            <!-- Single Discussion (Repeat for each discussion) -->
-            <li class="py-6">
-                <!-- Discussion Title -->
-                <a href="/discussion-link" class="text-xl text-gray-900 dark:text-gray-100 hover:underline">Discussion or Thread Title</a>
+               <div class="flex capitalize justify-between">
 
-                <!-- Discussion Details -->
+                        <a wire:navigate  href="<?php echo e(route('forum.single', ['id' => $post->id])); ?>"
+                            class="text-xl text-gray-900 dark:text-gray-100 hover:underline"><?php echo e($post->title); ?></a>
+                        <span class="text-sm dark:text-gray-500"><?php echo e($post->created_at->diffForHumans()); ?></span>
+                    </div>
+
                 <div class="mt-2 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
-                    <span>Posted by John Doe</span>
-                    <span>15 comments</span>
+                  <p><span>By:</span>  <span class="capitalize text-indigo-500 cursor-pointer hover:text-indigo-600"> <?php echo e($post->user->name); ?></span></p>
+                   <span><?php echo e($post->replies->count()); ?> comments</span>
                 </div>
             </li>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-            <!-- Repeat the above <li> block for additional discussions -->
 
         </ul>
 
         <!-- View All Discussions Button -->
         <div class="text-center mt-12">
-            <a href="/all-discussions" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition">View All Discussions</a>
+            <a wire:navigate href="/forums" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition">View All Discussions</a>
         </div>
 
     </div>
@@ -190,31 +186,31 @@
         <h2 class="text-3xl md:text-4xl font-bold mb-12">Community Stats</h2>
 
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
             <!-- Single Stat Block -->
             <div class="stat">
                 <!-- Number -->
-                <span class="text-4xl font-bold">12,500</span>
+                <span class="text-4xl font-bold"><?php echo e($users->count()); ?></span>
                 <!-- Description -->
                 <p class="mt-2 text-gray-600 dark:text-gray-400">Total Members</p>
             </div>
 
             <!-- Another Stat Block -->
             <div class="stat">
-                <span class="text-4xl font-bold">350</span>
+                <span class="text-4xl font-bold"><?php echo e($newUserCount); ?></span>
                 <p class="mt-2 text-gray-600 dark:text-gray-400">New This Week</p>
             </div>
 
             <!-- Another Stat Block -->
             <div class="stat">
-                <span class="text-4xl font-bold">2,180</span>
+                <span class="text-4xl font-bold"><?php echo e($topicCount); ?></span>
                 <p class="mt-2 text-gray-600 dark:text-gray-400">Active Topics</p>
             </div>
 
             <!-- Another Stat Block -->
             <div class="stat">
-                <span class="text-4xl font-bold">7,450</span>
+                <span class="text-4xl font-bold"><?php echo e($quizCount); ?></span>
                 <p class="mt-2 text-gray-600 dark:text-gray-400">Completed Quizzes</p>
             </div>
         </div>

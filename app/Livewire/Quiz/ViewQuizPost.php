@@ -33,7 +33,7 @@ class ViewQuizPost extends Component
 
         $this->currentQuestion = $this->getQuestions()[$this->currentQuestionIndex];
         $this->loadQuiz();
-        //  dd($this->questionSize);
+
     }
 
     #[On('start')]
@@ -77,29 +77,7 @@ class ViewQuizPost extends Component
         }
     }
 
-    // public function nextQuestion()
-    // {
 
-
-    //     array_push($this->answeredQuestions, $this->userAnswered);
-    //     $this->answeredQuestions[$this->currentQuestionIndex] = $this->userAnswered;
-    //   //  $this->userAnswered = $this->answeredQuestions[$this->currentQuestionIndex];
-    //     if ($this->currentQuestionIndex == $this->questionSize - 1) {
-    //         $this->getResult();
-    //         $this->showResult = true;
-    //         return;
-    //     }
-    //     if ($this->currentQuestionIndex < $this->questionSize) {
-    //         $this->currentQuestionIndex++;
-    //           $this->currentQuestion = $this->getQuestions()[$this->currentQuestionIndex];
-    //        // $this->userAnswered = $this->answeredQuestions[$this->currentQuestionIndex];
-    //     }
-
-    //   //  $this->currentQuestion = $this->getQuestions()[$this->currentQuestionIndex];
-
-
-
-    // }
     public function nextQuestion()
     {
         // Save the answer of the current question to the array
@@ -129,16 +107,7 @@ class ViewQuizPost extends Component
         $this->currentQuestion = $this->getQuestions()[$this->currentQuestionIndex];
     }
 
-    public function setAnswer($id, $value, $answer)
-    {
-        // if (in_array($id, $this->userAnswered)){
-        //     array_splice($this->userAnswered,)
-        // }
-        if (!in_array($id, $this->userAnswered)) {
-            array_push($this->userAnswered, array($id, $value, $answer, 'is_correct' => $value == ($answer) ? true : false));
-        }
-
-    }
+   
 
     public function loadQuiz()
     {

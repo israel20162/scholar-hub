@@ -17,7 +17,8 @@
                 <p class="text-sm text-gray-500 mt-2">Uploaded by: {{ $note->user->name }}</p>
 
                 <div class="mt-4">
-                    <a href="{{ route('note.download', $note->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded">Download</a>
+                    <a href="{{ route('note.download', $note->id) }}" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded">Download</a>
+                      <a href="{{ route('note.single', $note->id) }}" class="bg-indigo-500 hover:bg-indigo-600 text-white py-1 px-4 rounded">View</a>
                 </div>
             </div>
             @endforeach

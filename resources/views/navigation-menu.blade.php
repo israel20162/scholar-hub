@@ -24,7 +24,7 @@
                     <x-nav-link href="{{ route('quizzes') }}" :active="request()->routeIs('quizzes', 'quiz.single', 'quiz.create')">
                         {{ __('Quizzes') }}
                     </x-nav-link>
-                     <x-nav-link href="{{ route('notes') }}" :active="request()->routeIs('notes', 'notes.single', 'notes.create')">
+                    <x-nav-link href="{{ route('notes') }}" :active="request()->routeIs('notes', 'note.single', 'note.create')">
                         {{ __('Notes') }}
                     </x-nav-link>
                 </div>
@@ -35,8 +35,21 @@
 
                 <!-- Settings Dropdown -->
                 <div class="ml-3 relative">
+                      @if (!Auth::user())
+                            <div>
+                                <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login', 'topic.single', 'topic.create')">
+                                    {{ __('Login') }}
+                                </x-nav-link>
+                                <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register', 'topic.single', 'topic.create')">
+                                    {{ __('Register') }}
+                                </x-nav-link>
+                            </div>
+                                @endif
                     <x-dropdown align="right" width="48">
+
                         <x-slot name="trigger">
+
+
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button
                                     class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
@@ -47,19 +60,8 @@
                                                 alt="{{ Auth::user()->name }}" />
                                         </div>
                                     @else
-
                                     @endif
                                 </button>
-                                @if (!Auth::user())
-                                   <div>
-                                            <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login', 'topic.single', 'topic.create')">
-                                                {{ __('Login') }}
-                                            </x-nav-link>
-                                            <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register', 'topic.single', 'topic.create')">
-                                                {{ __('Register') }}
-                                            </x-nav-link>
-                                        </div>
-                                         @endif
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
@@ -135,7 +137,7 @@
             <x-responsive-nav-link href="{{ route('topics') }}" :active="request()->routeIs('topics', 'topic.single', 'topic.create')">
                 {{ __('Topics') }}
             </x-responsive-nav-link>
-               <x-responsive-nav-link href="{{ route('quizzes') }}" :active="request()->routeIs('quizzes', 'quiz.single', 'quiz.create')">
+            <x-responsive-nav-link href="{{ route('quizzes') }}" :active="request()->routeIs('quizzes', 'quiz.single', 'quiz.create')">
                 {{ __('Quizzes') }}
             </x-responsive-nav-link>
         </div>

@@ -49,7 +49,7 @@
         <ul class="divide-y divide-gray-200 dark:divide-gray-700">
             <!-- __BLOCK__ --><?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <li class="py-6">
-                    <div class="flex justify-between">
+                    <div class="flex capitalize justify-between">
                         <!-- Thread Title -->
                         <a href="<?php echo e(route('forum.single', ['id' => $post->id])); ?>"
                             class="text-xl text-gray-900 dark:text-gray-100 hover:underline"><?php echo e($post->title); ?></a>
