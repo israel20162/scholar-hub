@@ -20,5 +20,8 @@ export default {
         },
     },
 
-    plugins: [forms, typography],
+    plugins: [forms, typography, function ({ addVariant }) {
+        addVariant('child', '& > *');
+        addVariant('child-hover', '& > *:hover');
+    }],
 };

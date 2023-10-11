@@ -5,3 +5,8 @@
 [x-cloak] {
     display: none;
 }
+
+.no-tailwin > * {
+    appearance: none;
+    font-size: revert !important;
+}

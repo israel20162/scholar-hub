@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Topic;
 use App\Models\Quiz;
 use App\Models\User;
-
+use App\Models\Category;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -21,16 +21,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $users = User::all();
-        if ($users->count() === 0) {
-            echo "No users found. Please create some users!";
-            return;
-        }
+        Category::factory();
+        // $users = User::all();
+        // if ($users->count() === 0) {
+        //     echo "No users found. Please create some users!";
+        //     return;
+        // }
 
-        foreach ($users as $user) {
-            Quiz::factory(1)->create(['user_id' => $user->id]);
-            //Topic::factory(10)->create(['user_id' => $user->id]);
-            //ForumPost::factory(10)->create(['user_id' => $user->id]);
-        }
+        // foreach ($users as $user) {
+        //     Quiz::factory(1)->create(['user_id' => $user->id]);
+        //     //Topic::factory(10)->create(['user_id' => $user->id]);
+        //     //ForumPost::factory(10)->create(['user_id' => $user->id]);
+        // }
     }
 }

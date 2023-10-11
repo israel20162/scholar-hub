@@ -37,10 +37,10 @@
                 <div class="ml-3 relative">
                       @if (!Auth::user())
                             <div>
-                                <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login', 'topic.single', 'topic.create')">
+                                <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login',)">
                                     {{ __('Login') }}
                                 </x-nav-link>
-                                <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register', 'topic.single', 'topic.create')">
+                                <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register',)">
                                     {{ __('Register') }}
                                 </x-nav-link>
                             </div>
