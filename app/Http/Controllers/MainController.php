@@ -19,6 +19,15 @@ class MainController extends Controller
         $latestForumPosts = ForumPost::latest()->orderBy('likes_count', 'desc')->take(3)->get();
         $users = User::get();
         $newUsers = User::whereDate('created_at', '>=', Carbon::now()->subWeek())->get()->count();
-        return view('home', ['users' => $users,'newUserCount'=>$newUsers,'topicCount'=>Topic::count(),'quizCount'=>Quiz::count(), 'topics' => $trendingTopics, 'quizzes' => $latestQuizzes, 'forumPosts' => $latestForumPosts]);
+        return view('home', ['users' => $users, 'newUserCount' => $newUsers, 'topicCount' => Topic::count(), 'quizCount' => Quiz::count(), 'topics' => $trendingTopics, 'quizzes' => $latestQuizzes, 'forumPosts' => $latestForumPosts]);
+    }
+
+    /**
+     * @param  Request $request
+     */
+    public function userProfile(User $id, $user, Request $request)
+    {
+
+        return view('user.profile',['user'=>$id]);
     }
 }

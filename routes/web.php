@@ -7,7 +7,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NotesController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Broadcast;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Broadcast;
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/','homePage')->name('home');
+    Route::get('/user/{id}/{user}', 'userProfile')->name('user.profile');
 });
 
 Route::controller(ForumController::class)->group(function () {
@@ -58,7 +59,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-
+    Route::get('/forums/create', [ForumController::class,'createForum'])->name('forum.create');
+    Route::get('/topics/create', [TopicController::class,'createTopic'])->name('topic.create');
+    Route::get('/quizzes/create', [QuizController::class,'createQuiz'])->name('quiz.create');
 });
 
 

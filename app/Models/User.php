@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'karma'
     ];
 
     /**
@@ -74,4 +75,21 @@ class User extends Authenticatable
         return $this->hasMany(Message::class);
     }
 
+    public function quizzes()
+    {
+  return $this->hasMany(Quiz::class);
+    }
+    public function quizResults()
+    {
+        return $this->hasMany(QuizResult::class);
+    }
+    public function topics()
+    {
+  return $this->hasMany(Topic::class);
+    }
+
+     public function forumPosts()
+    {
+  return $this->hasMany(ForumPost::class);
+    }
 }

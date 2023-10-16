@@ -1,5 +1,5 @@
   <!-- Individual Topic View Page -->
-  <div class="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-500">
+  <div class="bg-white overflow-x-clip mx-auto dark:bg-gray-900 min-h-screen transition-colors duration-500">
 
       <!-- Page Header -->
       <div class=" py-6">
@@ -11,7 +11,8 @@
       <!-- Cover Image Section -->
       <div class="cover-image-section">
           @if ($topic->image_path)
-              <img src="{{ Storage::url($topic->image_path) }}" alt="Cover Image" class="w-full max-w-4xl object-cover max-h-96 mx-auto rounded  h-auto">
+              <img src="{{ Storage::url($topic->image_path) }}" alt="Cover Image"
+                  class="w-full max-w-4xl object-cover max-h-96 mx-auto rounded  h-auto">
           @else
               <img src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg?w=740"
                   alt="Default Image" class="max-w-4xl max-h-72 mx-auto rounded h-auto">
@@ -26,23 +27,25 @@
 
           <!-- Topic Details -->
           <article class="mb-12">
-              <header class="flex justify-between items-center mb-6">
-                  <span class="text-gray-600 dark:text-gray-400  ">By: <span class="dark:text-indigo-600">
-                          {{ $topic->user->name }}</span> </span>
-                  <span class="flex justify-between gap-2">
-                      <span class="text-sm text-gray-600 dark:text-gray-400">Category: <strong
+              <header class=" flex items-baseline md:justify-between md:items-center mb-6">
+                  <span class="text-gray-600  w-full md:w-auto whitespace-nowrap md:whitespace-normal dark:text-gray-400  ">By: <span
+                          class="dark:text-indigo-600">
+                          {{ $topic->user->name }}</span>
+                  </span>
+                  <span class="md:flex grid grid-cols-1 justify-between w-full md:w-auto md:gap-2">
+                      <span class="text-sm whitespace-nowrap text-gray-600 dark:text-gray-400">Category: <strong
                               class="text-indigo-600 dark:text-indigo-400">
                               {{ $topic?->category?->name }}
                           </strong>
-                        </span>
-                      <span class="text-sm text-gray-600 dark:text-gray-400">Tags: <strong
+                      </span>
+                      <span class="text-sm text-gray-600 whitespace-nowrap dark:text-gray-400">Tags: <strong
                               class="text-indigo-600 dark:text-indigo-400">
                               @foreach (json_decode($topic->categories) as $category)
                                   <span class="text-sm dark:text-indigo-600">{{ $category }},</span>
                               @endforeach
                           </strong>
-                        </span>
-                     </span>
+                      </span>
+                  </span>
 
               </header>
               <div class="text-gray-700 dark:text-gray-300 space-y-4">

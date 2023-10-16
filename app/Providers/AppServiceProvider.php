@@ -22,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Model::preventSilentlyDiscardingAttributes(!$this->app->isProduction());
+        \Illuminate\Pagination\Paginator::useTailwind();
     }
 }

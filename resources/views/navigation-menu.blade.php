@@ -35,16 +35,16 @@
 
                 <!-- Settings Dropdown -->
                 <div class="ml-3 relative">
-                      @if (!Auth::user())
-                            <div>
-                                <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login',)">
-                                    {{ __('Login') }}
-                                </x-nav-link>
-                                <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register',)">
-                                    {{ __('Register') }}
-                                </x-nav-link>
-                            </div>
-                                @endif
+                    @if (!Auth::user())
+                        <div>
+                            <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                                {{ __('Login') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                                {{ __('Register') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                     <x-dropdown align="right" width="48">
 
                         <x-slot name="trigger">
@@ -83,10 +83,14 @@
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Manage Account') }}
                             </div>
-
-                            <x-dropdown-link href="{{ route('profile.show') }}">
+                            <x-dropdown-link
+                                href="{{ route('user.profile', ['user' => Str::slug(Auth::user()->name),'id'=>Auth::user()]) }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('profile.show') }}">
+                                {{ __('Account Settings') }}
+                            </x-dropdown-link>
+
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">

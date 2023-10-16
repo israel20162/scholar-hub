@@ -40,21 +40,24 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <!-- Single Topic (Repeat for each topic) -->
-           @foreach ($topics as $topic)
+           @forelse ($topics as $topic)
  <div class="topic relative bg-gray-100 dark:bg-black p-6 rounded-lg transition-shadow duration-500 hover:shadow-lg">
                 <!-- Topic Title -->
                 <a wire:navigate href="{{ route('topic.single', ['id' => $topic->id]) }}" class="text-xl text-gray-900 dark:text-white hover:underline mb-4 block">{{$topic->title}}</a>
 
                 <!-- Topic Details -->
-                <p class="text-sm text-gray-600 line-clamp-3 whitespace-normal dark:text-white mb-4">{{$topic->body}}</p>
 
+  <article class="  text-sm text-gray-600 line-clamp-3 whitespace-normal child:dark:text-white mb-4   child:first-letter:capitalize first-letter:capitalize  dark:!text-gray-300   ">
+                          {!! Str::limit($topic->body, 100) !!}</article>
                 <!-- Topic Metadata -->
                 <div class="flex justify-between absolute bottom-3 capitalize items-center text-xs text-gray-600 dark:text-white">
                     <span >By <span class="hover:text-indigo-600 text-indigo-500 hover:cursor-pointer">{{ $topic->user->name }}</span></span>
                     {{-- <span>45 comments</span> --}}
                 </div>
             </div>
-           @endforeach
+            @empty
+            <div class="text-2xl w-full text-center ">No Topic</div>
+           @endforelse
 
             <!-- Repeat the above block for additional trending topics -->
 

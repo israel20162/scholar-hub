@@ -3,6 +3,7 @@
 namespace App\Livewire\Quiz;
 
 use App\Models\Quiz;
+use App\Models\QuizResult;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
@@ -67,6 +68,8 @@ class ViewQuizPost extends Component
         }
         $this->quizPecentage = round($this->score / $this->questionSize * 100, 2);
 
+        $this->storeResult();
+
     }
     public function previousQuestion()
     {
@@ -107,41 +110,22 @@ class ViewQuizPost extends Component
         $this->currentQuestion = $this->getQuestions()[$this->currentQuestionIndex];
     }
 
-   
+    public function storeResult()
+    {
+        QuizResult::create([
+            'quiz_id' => $this->quizId,
+            'user_id' => auth()->id(),
+            'score' => $this->quizPecentage
+        ]);
+    }
+
+
 
     public function loadQuiz()
     {
         $this->quiz = Quiz::find($this->quizId);
     }
 
-    public function addReply()
-    {
-        $this->validate([
-            'reply' => 'required|min:5',
-        ]);
-
-        // ForumPostReply::create([
-        //     'post_id' => $this->postId,
-        //     'body' => $this->reply,
-        //     'user_id' => auth()->id()
-        // ]);
-
-        //$this->reply = ''; // Clear the input
-        $this->loadPost(); // Refresh the post with the new reply
-    }
-    public function likePost()
-    {
-        $this->post->likedByUsers()->attach(auth()?->id());
-        $this->post->increment('likes_count');
-        $this->loadPost(); // Refresh the post data after liking
-    }
-
-    public function unlikePost()
-    {
-        $this->post->likedByUsers()->detach(auth()?->id());
-        $this->post->decrement('likes_count');
-        $this->loadPost(); // Refresh the post data after unliking
-    }
 
 
     public function render()

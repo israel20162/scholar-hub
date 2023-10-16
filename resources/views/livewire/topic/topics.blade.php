@@ -10,7 +10,7 @@
       <div class=" py-6">
           <h1 class="text-3xl md:text-4xl font-bold text-white text-center">Topics</h1>
       </div>
-      <div class="flex justify-between items-center p-4">
+      <div class="flex gap-2 md:gap-0 justify-between items-center md:p-4">
           <!-- Tab Menu -->
           <div class="mb-6">
               <button wire:click="switchTab('newest')"
@@ -30,9 +30,21 @@
 
 
       <!-- Main Content Container -->
-      <div class="container mx-auto px-4 ">
+      <div class="container mx-auto px-2 md:px-4 ">
           <!-- Search Bar -->
-          <div>
+          <div class=' flex gap-2 justify-between items-center w-full'>
+              @if ($category)
+                  <div class="dark:text-gray-300 text-xs md:text-base whitespace-nowrap gap-1 flex flex-col md:flex-row md:items-center ">
+                      Search Category:
+                       <button wire:click='resetCategory' type="button"
+                          class="bg-indigo-600 md:text-center md:text-base text-xs md:px-4 md:py-1 py-2 dark:text-gray-300 md:m-0 mt-1 rounded ">
+                          {{ $category }}
+                          <strong class="text-black text-center md:text-xl p-0">x</strong>
+                      </button>
+                  </div>
+              @endif
+
+
               <x-search-box placeHolder='topics' />
           </div>
 
@@ -43,7 +55,7 @@
                       <div class="flex justify-between">
                           <!-- Thread Title -->
                           <a href="{{ route('topic.single', ['id' => $topic->id]) }}"
-                              class="text-xl text-gray-900 dark:text-gray-100 hover:underline">{{ $topic->title }}</a>
+                              class="text-xl capitalize text-gray-900 dark:text-gray-100 hover:underline">{{ $topic->title }}</a>
                           <span class="text-sm dark:text-gray-500">{{ $topic->created_at->diffForHumans() }}</span>
                       </div>
 
@@ -52,16 +64,23 @@
                       <div class="mt-2 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
                           <span class="capitalize">By: {{ $topic->user->name }}</span>
                           <p class="gap-2 flex"><span>{{ $topic->likes_count }} likes
-                                  {{-- </span><span>{{ $topic->replies->count() }} comments</span></p> --}}
+                              </span><span>{{ $topic->replies->count() }} comments</span></p>
 
                       </div>
-                      <div>
+                      <div class="gap-2 flex my-2">
+                          <span class="text-sm text-gray-600 dark:text-gray-400">Category: <strong
+                                  class="text-indigo-600 dark:text-indigo-600 cursor-pointer"
+                                  wire:click="setCategory({{ $topic->category->id }})">
+                                  {{ $topic?->category?->name }}
+                              </strong>
+                          </span> <span class="text-sm text-gray-600 dark:text-gray-400">Tags: </span>
                           @foreach (json_decode($topic->categories) as $category)
                               <span class="text-sm dark:text-indigo-600">#{{ $category }}</span>
                           @endforeach
                       </div>
                       <!-- Thread Snippet -->
-                      <article class=" !mt-4 child:dark:text-gray-300 child:first-letter:capitalize first-letter:capitalize  dark:!text-gray-300   ">
+                      <article
+                          class=" !mt-4 child:dark:text-gray-300 child:first-letter:capitalize first-letter:capitalize  dark:!text-gray-300   ">
                           {!! Str::limit($topic->body, 100) !!}</article>
 
 
@@ -73,19 +92,10 @@
 
           </ul>
 
-          <!-- Pagination (If necessary) -->
-          <div class="mt-12 flex justify-center">
-              <a href="#" class="mx-2 px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700">1</a>
-              <a href="#"
-                  class="mx-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">2</a>
-              <!-- ... Additional Page Numbers ... -->
-              <a href="#"
-                  class="mx-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">Next</a>
-          </div>
-      </div>
 
-      <!-- Page Footer (optional) -->
-      <footer class="bg-gray-100 dark:bg-gray-800 py-6">
-          <!-- Footer content, such as links, copyrights, etc. -->
-      </footer>
+
+      </div>
+      <div class=" md:mt-16">
+          {{ $topics->links() }}
+      </div>
   </div>

@@ -17,4 +17,20 @@ class Quiz extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function results()
+    {
+        return $this->hasMany(QuizResult::class);
+    }
+
+    // Calculate the average score dynamically
+    public function averageScore()
+    {
+        return $this->results()->avg('score');
+    }
+
+    // Calculate the number of times the quiz was taken
+    public function timesTaken()
+    {
+        return $this->results()->count();
+    }
 }

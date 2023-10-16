@@ -70,7 +70,7 @@
                     id = 'quill-editor',
                     val = el.val(),
                     editor_height = 400;
-                var div = $('<div/>').attr('id', id).css('height', editor_height + 'px').html(val).addClass('rounded');
+                var div = $('<div/>').attr('id', id).css('height', editor_height + 'px').html(val).addClass('rounded').addClass('text-white');
                 el.addClass('hidden');
                 el.parent().append(div);
 

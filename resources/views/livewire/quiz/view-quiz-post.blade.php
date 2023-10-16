@@ -87,8 +87,7 @@
                                                          wire:click="nextQuestion"
                                                             class="ml-auto bg-indigo-600 py-2 px-4 rounded">Next<button>
                                                             @else
-                                                                <button    wire:click="getResult"  class="ml-4">Show
-                                                                    Result<button>
+                                                                <button    wire:click="getResult"  class="ml-auto bg-indigo-600 py-2 px-4 rounded">Submit Quiz<button>
                                                     @endif
                                                 </div>
 
