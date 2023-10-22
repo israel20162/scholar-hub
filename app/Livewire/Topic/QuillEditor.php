@@ -8,16 +8,14 @@ use Livewire\Component;
 class QuillEditor extends Component
 {
     public $body;
-   
-    // #[On('draft-saved')]
-    // public function foo()
-    // {
-        
-        
-    // }
+
+    public function mount($body)
+    {
+        $this->body = $body;
+    }
     public function saveDraft()
     {
-      //  $this->dispatch('//);
+        //  $this->dispatch('//);
     }
     public function render()
     {

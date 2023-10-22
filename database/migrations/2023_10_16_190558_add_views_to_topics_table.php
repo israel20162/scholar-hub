@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('karma')->default(0);
+        Schema::table('topics', function (Blueprint $table) {
+            $table->unsignedBigInteger('views')->default(0);
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('karma');
+        Schema::table('topics', function (Blueprint $table) {
+            Schema::dropColumns('topics',['views']);
         });
     }
 };

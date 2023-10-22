@@ -112,6 +112,10 @@ class ViewQuizPost extends Component
 
     public function storeResult()
     {
+        if (auth()->id() !== $this->quiz->user_id) {
+            $this->quiz->user->increment('karma',1);
+        }
+
         QuizResult::create([
             'quiz_id' => $this->quizId,
             'user_id' => auth()->id(),

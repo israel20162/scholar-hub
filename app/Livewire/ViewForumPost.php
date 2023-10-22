@@ -45,6 +45,11 @@ class ViewForumPost extends Component
     {
         $this->post->likedByUsers()->attach(auth()?->id());
         $this->post->increment('likes_count');
+        if (auth()->id() === $this->post->user_id) {
+            $this->user->increment('karma', 0);
+        } else {
+            $this->post->user->increment('karma', 5);
+        }
         $this->loadPost(); // Refresh the post data after liking
     }
 
@@ -52,6 +57,11 @@ class ViewForumPost extends Component
     {
         $this->post->likedByUsers()->detach(auth()?->id());
         $this->post->decrement('likes_count');
+        if (auth()->id() === $this->topic->user_id) {
+            $this->user->decrement('karma', 0);
+        } else {
+            $this->post->user->decrement('karma', 5);
+        }
         $this->loadPost(); // Refresh the post data after unliking
     }
 

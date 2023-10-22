@@ -26,6 +26,10 @@ class NotesController extends Controller
     {
 
         $pathofFile = public_path("storage/app/$note->file_path");
-        return response()->download($pathofFile, Str::slug($note->title).'.pdf');
+        if (auth()->id() !== $note->user_id) {
+            $note->user->increment('karma', 1);
+        }
+
+        return response()->download($pathofFile, Str::slug($note->title) . '.pdf');
     }
 }

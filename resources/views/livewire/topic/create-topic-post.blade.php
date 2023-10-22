@@ -26,15 +26,13 @@
                 @enderror
             </div>
             <style>
-                .no-tailwind>h1 {
-                    all: unset !important;
-                }
+
             </style>
             <!-- Rich Text Editor - Example using Quill.js -->
             <div class="mb-4">
                 <label for="body"
                     class="block dark:text-gray-300 text-lg font-medium mb-2">Explanation/Content:</label>
-                @livewire('topic.quill-editor')
+                @livewire('topic.quill-editor',['body'=>''])
                 @error('body')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror

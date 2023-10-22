@@ -92,4 +92,12 @@ class User extends Authenticatable
     {
   return $this->hasMany(ForumPost::class);
     }
+    public function results()
+    {
+        return $this->hasMany(QuizResult::class,'user_id');
+    }
+    public function timesTaken()
+    {
+        return $this->results()->count();
+    }
 }

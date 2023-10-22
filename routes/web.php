@@ -22,7 +22,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/','homePage')->name('home');
-    Route::get('/user/{id}/{user}', 'userProfile')->name('user.profile');
+    Route::get('/user/{id}/{user}', 'userProfile')->middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->name('user.profile');
 });
 
 Route::controller(ForumController::class)->group(function () {
@@ -36,6 +40,11 @@ Route::controller(TopicController::class)->group(function () {
 Route::get('/topics', 'index')->name('topics');
     Route::get('/topics/create', 'createTopic')->name('topic.create');
 Route::get('/topics/{id}', 'single')->name('topic.single');
+Route::get('/topics/{id}/edit', 'editTopic')->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ])->name('topic.edit');
 });
 
 Route::controller(QuizController::class)->group(function () {

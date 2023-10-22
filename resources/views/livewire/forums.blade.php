@@ -1,5 +1,5 @@
-<div class="bg-white md:border-r border-s-0 dark:border-gray-700  ml-10 dark:bg-gray-900  transition-colors duration-500">
-
+<div
+    class="bg-white md:border-r border-s-0 dark:border-gray-700  ml-10 dark:bg-gray-900  transition-colors duration-500">
     <!-- Page Header -->
     <div class=" py-6">
         <h1 class="text-3xl md:text-4xl font-bold text-white text-center">Forums & Discussions</h1>
@@ -28,7 +28,7 @@
 
         <!-- Search Bar -->
         <div>
-           <x-search-box placeHolder='discussions'/>
+            <x-search-box placeHolder='discussions' />
         </div>
 
         <!-- Discussion Threads List -->
@@ -45,7 +45,12 @@
 
                     <!-- Thread Details -->
                     <div class="mt-2 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
-                        <span class="capitalize">By: {{ $post->user->name }}</span>
+                        <span class="capitalize">By: @if ($post->user)
+                                {{ $post->user->name }}
+                            @else
+                                [Deleted Account]
+                            @endif
+                        </span>
                         <p class="gap-2 flex"><span>{{ $post->likes_count }} likes
                             </span><span>{{ $post->replies->count() }} comments</span></p>
 
@@ -58,7 +63,7 @@
 
                     <!-- Thread Snippet -->
                     <p class="mt-4 text-gray-700 dark:text-gray-300">
-                       {{ Str::limit( $post->body,100)}}
+                        {{ Str::limit($post->body, 100) }}
                     </p>
                 </li>
             @endforeach
@@ -70,16 +75,10 @@
 
         </ul>
 
-        <!-- Pagination (If necessary) -->
-        <div class="mt-12 flex justify-center">
-            <a href="#" class="mx-2 px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700">1</a>
-            <a href="#"
-                class="mx-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">2</a>
-            <!-- ... Additional Page Numbers ... -->
-            <a href="#"
-                class="mx-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">Next</a>
-        </div>
+
     </div>
 
-
+    <div class=" md:mt-16 px-4">
+        {{ $posts->links() }}
+    </div>
 </div>

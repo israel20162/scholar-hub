@@ -83,10 +83,13 @@
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Manage Account') }}
                             </div>
-                            <x-dropdown-link
-                                href="{{ route('user.profile', ['user' => Str::slug(Auth::user()->name),'id'=>Auth::user()]) }}">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
+                            @if (Auth::user())
+                                <x-dropdown-link
+                                    href="{{ route('user.profile', ['user' => Str::slug(Auth::user()->name), 'id' => Auth::user()]) }}">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+                            @endif
+
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Account Settings') }}
                             </x-dropdown-link>

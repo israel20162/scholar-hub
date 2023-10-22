@@ -17,10 +17,10 @@
         </a> --}}
     </div>
 
-    <main x-data="{ tab: 'quiz' }">
+    <main x-data="{ tab: 'profile' }" class="mb-32">
         <!-- User Info Tabs -->
         <div class="mt-6 border-b-2">
-            <ul class="flex justify-between w-1/4">
+            <ul class="flex justify-between md:w-1/4 md:p-0 px-4">
                 <li class="hover:text-gray-600 cursor-pointer dark:text-gray-300  py-2"
                     :class="{ 'dark:text-indigo-600 border-b border-indigo-600': tab == 'profile' }"
                     @click="tab = 'profile'">
@@ -28,11 +28,11 @@
                 <li class="hover:text-gray-600 cursor-pointer dark:text-gray-300 py-2"
                     :class="{ 'dark:text-indigo-600 border-b border-indigo-600': tab == 'quiz' }" @click="tab = 'quiz'">
                     Quizzes</li>
-                <li class="hover:text-indigo-600 py-2"
-                    :class="{ 'text-indigo-600 border-b border-indigo-600': tab == 'profile' }"
-                    @click="tab = 'profile'">
-                    Notes</li>
-                <li class="hover:text-indigo-600 py-2"
+                <li class="hover:text-gray-600 cursor-pointer dark:text-gray-300 py-2"
+                    :class="{ 'dark:text-indigo-600 border-b border-indigo-600': tab == 'topics' }"
+                    @click="tab = 'topics'">
+                    Topics</li>
+                <li class="hover:text-gray-600 cursor-pointer dark:text-gray-300 py-2"
                     :class="{ 'text-indigo-600 border-b border-indigo-600': tab == 'profile' }"
                     @click="tab = 'profile'">
                     Inbox</li>
@@ -98,9 +98,7 @@
                                 <strong class="text-slate-700">Email:</strong> &nbsp; {{ $user->email }}
                             </li>
 
-                            {{-- <li class="relative block px-4 py-2 pl-0 leading-normal bg-slate-900 border-0 border-t-0 text-sm text-inherit">
-              <strong class="text-slate-300">Location:</strong> &nbsp; USA
-            </li> --}}
+
                             <li
                                 class="relative block px-4 py-2 pb-0 pl-0 bg-slate-900 border-0 border-t-0 rounded-b-lg text-inherit">
                                 <strong class="leading-normal text-sm text-slate-700">Social:</strong> &nbsp; <a
@@ -223,9 +221,52 @@
                     </div>
                 </div>
             </div>
+            {{-- topics section --}}
+            <div class="mt-8  w-full bg-white dark:bg-gray-900 p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2">Your Published
+                    Topics</h3>
+
+                <!-- List of Topics -->
+                <ul class="mt-4 space-y-4">
+                    @foreach ($user->topics as $topic)
+                        <li
+                            class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:shadow-md transition duration-200">
+                            <!-- Topic Title and Publication Date -->
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xl capitalize font-medium text-gray-800 dark:text-gray-300">
+                                    {{ $topic->title }}
+                                </h4>
+                                <span
+                                    class="text-sm text-gray-500 dark:text-indigo-500">{{ $topic->created_at->format('F j, Y') }}</span>
+                            </div>
+
+                            <!-- Topic Details -->
+                            <div class="flex items-center justify-between mt-2">
+                                <!-- Views/Interactions Count -->
+                               <div class="text-sm flex justify-evenly gap-1 whitespace-nowrap ">
+                                    <p class="text-gray-600 dark:text-indigo-500">{{ $topic->views }} views</p> |
+                                    <p class="text-gray-600 dark:text-indigo-500">{{ $topic->likes_count }}
+                                        {{ Str::plural('like', $topic->likes_count) }}</p> |
+                                        <p class="mr-4 text-gray-600 dark:text-indigo-500">{{ $topic->replies->count() }}
+                                        {{ Str::plural('comment',  $topic->replies->count()) }}</p>
+
+                                </div>
+                                <!-- View/Edit Links -->
+                                <div class="text-right">
+                                    <a href="{{ route('topic.single', $topic->id) }}"
+                                        class="text-blue-500 dark:text-indigo-600 hover:underline">View</a>
+                                    <span class="mx-2">|</span>
+                                    <a href="{{ route('topic.edit', $topic->id) }}"
+                                        class="text-blue-500 dark:text-indigo-600 hover:underline">Edit</a>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </section>
 
-        <section x-show="tab === 'quiz'" class="grid grid-cols-1 md:grid-cols-3">
+        <section x-show="tab === 'quiz'" class="grid grid-cols-1 md:grid-cols-2">
             <!-- Quizzes Created by the User -->
             <div class="mx-auto w-full col-span-2 mt-6 bg-white dark:bg-gray-900   ">
                 <h3 class="mb-0 text-2xl text-center font-bold dark:text-gray-300">Your Quizzes</h3>
@@ -260,8 +301,11 @@
 
                                 <!-- Quiz Statistics -->
                                 <div class="text-sm capitalize flex flex-col gap-2">
-                                    <p><span class="font-semibold dark:text-gray-500">Taken:</span> <span class="dark:text-indigo-500"> {{ $quiz->timesTaken() }} {{ Str::plural('time',$quiz->timesTaken())}}</span></p>
-                                    <p><span class="font-semibold dark:text-gray-500">Average Score:</span> <span class="dark:text-indigo-500">{{ $quiz->averageScore() }}%</span>
+                                    <p><span class="font-semibold dark:text-gray-500">Taken:</span> <span
+                                            class="dark:text-indigo-500"> {{ $quiz->timesTaken() }}
+                                            {{ Str::plural('time', $quiz->timesTaken()) }}</span></p>
+                                    <p><span class="font-semibold dark:text-gray-500">Average Score:</span> <span
+                                            class="dark:text-indigo-500">{{ $quiz->averageScore() }}%</span>
                                     </p>
                                 </div>
                             </div>
@@ -269,37 +313,104 @@
                     @endforeach
                 </ul>
             </div>
-           <!-- Quizzes Taken Section -->
-<div class="mx-auto md:w-10/12 w-full  mt-6 bg-white dark:bg-gray-900  ">
-    <h3 class="mb-0 text-2xl text-center font-bold dark:text-gray-300">Quizzes You've Taken</h3>
+            <!-- Quizzes Taken Section -->
+            <div class="mx-auto  w-full  mt-6 bg-white dark:bg-gray-900  ">
+                <h3 class="mb-0 text-2xl text-center font-bold dark:text-gray-300">Quizzes You've Taken</h3>
 
-    <!-- List of Quizzes -->
-    <ul class="gap-3 mt-6 grid ">
-        @foreach($user->quizResults as $result)
-            <li class="px-4 py-4 dark:bg-gray-800 w-full rounded-lg hover:shadow-md transition duration-200">
+                <!-- List of Quizzes -->
+                <ul class="gap-3 mt-6 grid ">
+                    @foreach ($user->quizResults->sortByDesc('created_at')->unique('quiz_id') as $result)
+                        <li
+                            class="px-4 py-4 dark:bg-gray-800 w-full rounded-lg hover:shadow-md transition duration-200">
 
-                <!-- Quiz Title and Date Taken -->
-                <div class="flex items-center justify-between">
-                    <h4 class="text-xl font-bold text-gray-800 dark:text-gray-300">{{ $result->quiz->title }}</h4>
-                    <span class="text-sm dark:text-indigo-500">{{ $result->created_at->format('F j, Y') }}</span>
-                </div>
+                            <!-- Quiz Title and Date Taken -->
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xl capitalize font-bold text-gray-800 dark:text-gray-300">
+                                    {{ $result->quiz->title }}</h4>
+                                <span
+                                    class="text-sm dark:text-indigo-500">{{ $result->created_at->format('F j, Y') }}</span>
+                            </div>
 
-                <!-- Quiz Details -->
-                <div class="flex items-center justify-between gap-3 mt-4">
-                    <!-- User's Score -->
-                    <div>
-                        <p class="dark:text-indigo-500 font-medium">Your Score: {{ $result->score }}%</p>
-                    </div>
 
-                    <!-- Total Times Taken -->
-                    <div class="text-right whitespace-nowrap">
-                        <p class="dark:text-indigo-500"><span class="font-medium dark:text-indigo-500">{{ $result->quiz->results->count() }}</span> times taken</p>
-                    </div>
-                </div>
-            </li>
-        @endforeach
-    </ul>
-</div>
+                            <!-- Quiz Details -->
+                            <div class="flex items-center justify-between gap-3 mt-4">
+                                <!-- User's Score -->
+                                <div>
+                                    <p class="dark:text-indigo-500 font-medium"> Average Score:
+                                        {{ round($user->quizResults->where('quiz_id', $result->quiz->id)->avg('score'), 2) }}%
+                                    </p>
+                                </div>
+
+                                <!-- Total Times Taken -->
+                                <div class="text-right whitespace-nowrap">
+                                    <p class="dark:text-indigo-500"><span
+                                            class="font-medium dark:text-indigo-500">Taken:
+                                            {{ $user->quizResults->where('quiz_id', $result->quiz->id)->count() }}
+                                            {{ Str::plural('time', $user->quizResults->where('quiz_id', $result->quiz->id)->count()) }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+        </section>
+
+        <section x-show="tab === 'topics'" class="grid md:grid-cols-1">
+            <!-- User's Published Topics Section -->
+            <div class="mt-8 w-full   bg-white dark:bg-gray-800 md:p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold mb-4 text-gray-700 dark:text-gray-200 border-b pb-2">Your Published
+                    Topics</h3>
+
+                <!-- List of Topics -->
+                <ul class="mt-4 space-y-4">
+                    @foreach ($user->topics as $topic)
+                        <li
+                            class="md:p-4 p-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:shadow-md transition duration-200">
+                            <!-- Topic Title and Publication Date -->
+                            <div class="flex items-start  justify-between">
+                                <div>
+                                    <h4 class="text-xl capitalize font-bold text-gray-800 dark:text-gray-300">
+                                        {{ $topic->title }}</h4>
+                                    <p class="text-sm text-gray-300 my-1">Category: <span class="dark:text-indigo-500"> {{ $topic->category->name }}
+                                    </span></p>
+                                </div>
+                                <span
+                                    class="text-sm text-gray-500 mt-1 dark:text-indigo-400 font-bold">{{ $topic->created_at->format('F j, Y') }}</span>
+                            </div>
+       <!-- Excerpt -->
+                            <div class="py-12 no-tailwin ql-editor line-clamp-5 !overflow-auto  !whitespace-normal !text-ellipsis  child:dark:text-gray-300 child:first-letter:capitalize first-letter:capitalize  dark:!text-gray-300  ">
+                                {!! $topic->body !!}</div>
+                                  {{-- <div class="child:dark:text-gray-300  ">{!! $topic->body !!}</div> --}}
+                            <!-- Topic Details -->
+                            <div class="flex items-center justify-between mt-2">
+                                <!-- Views/Interactions Count -->
+                                <div class="text-sm flex justify-evenly gap-1 whitespace-nowrap ">
+                                    <p class="text-gray-600 dark:text-indigo-500">{{ $topic->views }} views</p> |
+                                    <p class="text-gray-600 dark:text-indigo-500">{{ $topic->likes_count }}
+                                        {{ Str::plural('like', $topic->likes_count) }}</p> |
+                                        <p class="mr-4 text-gray-600 dark:text-indigo-500">{{ $topic->replies->count() }}
+                                        {{ Str::plural('comment',  $topic->replies->count()) }}</p>
+
+                                </div>
+
+                                <!-- View/Edit Links -->
+                                <div class="text-right text-sm whitespace-nowrap">
+                                    <a href="{{ route('topic.single', $topic->id) }}"
+                                        class="text-blue-500 dark:text-blue-400 hover:underline">View</a>
+                                    <span class="mx-1">|</span>
+                                    <a href="{{ route('topic.edit', $topic->id) }}"
+                                        class="text-blue-500 dark:text-blue-400 hover:underline">Edit</a>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+
+
 
         </section>
 
