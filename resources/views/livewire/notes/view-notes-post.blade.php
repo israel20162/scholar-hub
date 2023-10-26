@@ -19,7 +19,7 @@
             <img src="{{ Storage::url($note->thumbnail_path) }}" alt="Note Thumbnail" class="shadow-md">
         </div>
         @endif
-        <embed src="{{ Storage::url('app/'.$note->file_path) }}" type="application/pdf" class="w-full h-96">
+        <embed src="{{ Storage::url($note->file_path) }}" type="application/pdf" class="w-full h-96">
     </div>
 
     <div class="mt-8">

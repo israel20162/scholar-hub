@@ -21,12 +21,17 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::controller(MainController::class)->group(function () {
-    Route::get('/','homePage')->name('home');
+    Route::get('/', 'homePage')->name('home');
     Route::get('/user/{id}/{user}', 'userProfile')->middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->name('user.profile');
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ])->name('user.profile');
+    Route::get('/view-profile/user/{user}', 'showUserProfile')->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ])->name('user.profile.view');
 });
 
 Route::controller(ForumController::class)->group(function () {
@@ -37,10 +42,10 @@ Route::controller(ForumController::class)->group(function () {
 });
 
 Route::controller(TopicController::class)->group(function () {
-Route::get('/topics', 'index')->name('topics');
+    Route::get('/topics', 'index')->name('topics');
     Route::get('/topics/create', 'createTopic')->name('topic.create');
-Route::get('/topics/{id}', 'single')->name('topic.single');
-Route::get('/topics/{id}/edit', 'editTopic')->middleware([
+    Route::get('/topics/{id}', 'single')->name('topic.single');
+    Route::get('/topics/{id}/edit', 'editTopic')->middleware([
         'auth:sanctum',
         config('jetstream.auth_session'),
         'verified',
@@ -48,16 +53,21 @@ Route::get('/topics/{id}/edit', 'editTopic')->middleware([
 });
 
 Route::controller(QuizController::class)->group(function () {
-    Route::get('/quizzes', 'index')->name('quizzes');
-    Route::get('/quizzes/create', 'createQuiz')->name('quiz.create');
-    Route::get('/quizzes/{id?}', 'single')->name('quiz.single');
+    Route::get('/quiz', 'index')->name('quizzes');
+    Route::get('/quiz/create', 'createQuiz')->name('quiz.create');
+    Route::get('/quiz/{id?}', 'single')->name('quiz.single');
+    Route::get('/quiz/{id}/edit', 'editQuiz')->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ])->name('quiz.edit');
 });
 
 Route::controller(NotesController::class)->group(function () {
     Route::get('/notes', 'index')->name('notes');
     Route::get('/notes/upload', 'uploadNote')->name('note.upload');
 
-    Route::get('/notes/{note}/download',  'download')->name('note.download');
+    Route::get('/notes/{note}/download', 'download')->name('note.download');
     Route::get('/notes/create', 'createNote')->name('note.create');
     Route::get('/notes/{id?}', 'single')->name('note.single');
 });
@@ -68,9 +78,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/forums/create', [ForumController::class,'createForum'])->name('forum.create');
-    Route::get('/topics/create', [TopicController::class,'createTopic'])->name('topic.create');
-    Route::get('/quizzes/create', [QuizController::class,'createQuiz'])->name('quiz.create');
+    Route::get('/forums/create', [ForumController::class, 'createForum'])->name('forum.create');
+    Route::get('/topics/create', [TopicController::class, 'createTopic'])->name('topic.create');
+    Route::get('/quizzes/create', [QuizController::class, 'createQuiz'])->name('quiz.create');
 });
 
 
@@ -83,6 +93,6 @@ Route::middleware([
 
 
 
-Route::get('/chat/{id}', [ChatController::class,'index']);
-Route::post('/chat/send', [ChatController::class,'sendMessage']);
+Route::get('/chat/{id}', [ChatController::class, 'index']);
+Route::post('/chat/send', [ChatController::class, 'sendMessage']);
 Route::post('/chat/messages', 'ChatController@sendMessage');

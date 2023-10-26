@@ -24,7 +24,7 @@
                     <x-nav-link href="{{ route('quizzes') }}" :active="request()->routeIs('quizzes', 'quiz.single', 'quiz.create')">
                         {{ __('Quizzes') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('notes') }}" :active="request()->routeIs('notes', 'note.single', 'note.create')">
+                    <x-nav-link href="{{ route('notes') }}" :active="request()->routeIs('notes', 'note.upload', 'note.create')">
                         {{ __('Notes') }}
                     </x-nav-link>
                 </div>
@@ -147,6 +147,9 @@
             <x-responsive-nav-link href="{{ route('quizzes') }}" :active="request()->routeIs('quizzes', 'quiz.single', 'quiz.create')">
                 {{ __('Quizzes') }}
             </x-responsive-nav-link>
+             <x-responsive-nav-link href="{{ route('notes') }}" :active="request()->routeIs('notes', 'note.single', 'note.create')">
+                {{ __('Notes') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -175,10 +178,15 @@
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
                 @if (Auth::user())
-                    <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                    <x-responsive-nav-link
+                        href="{{ route('user.profile', ['user' => Str::slug(Auth::user()->name), 'id' => Auth::user()]) }}">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
                 @endif
+
+                <x-responsive-nav-link href="{{ route('profile.show') }}">
+                    {{ __('Account Settings') }}
+                </x-responsive-nav-link>
 
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())

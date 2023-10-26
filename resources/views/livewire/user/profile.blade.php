@@ -11,10 +11,7 @@
             </div>
         </div>
 
-        <!-- Edit Profile Button -->
-        {{-- <a href="{{ route('profile.edit', $user) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Edit Profile
-        </a> --}}
+
     </div>
 
     <main x-data="{ tab: 'profile' }" class="mb-32">
@@ -40,7 +37,7 @@
         </div>
 
         <section x-show="tab === 'profile'" class="grid md:grid-cols-2">
-            <div class="w-full max-w-full px-3 mt-6 lg-max:mt-6  mb-4 draggable">
+            <div class="w-full max-w-full px-3 mt-6 lg-max:mt-6  mb-4 draggable" x-data="{ isEditing: @entangle('isEditing') }">
 
                 <div
                     class="relative flex flex-col h-full min-w-0 break-words bg-slate-900 text-white border-0 shadow-soft-xl  bg-clip-border">
@@ -49,9 +46,9 @@
                             <div
                                 class="flex items-center justify-between w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-none">
                                 <h2 class="mb-0 text-lg font-bold ">Profile Information</h2>
-                                <svg class="h-6 w-6 cursor-pointer" viewBox="-2.4 -2.4 28.80 28.80" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg" stroke="rgb(75 85 99)"
-                                    transform="matrix(1, 0, 0, 1, 0, 0)">
+                                <svg @click="isEditing = !isEditing" class="h-6 w-6 cursor-pointer"
+                                    viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                    stroke="rgb(75 85 99)" transform="matrix(1, 0, 0, 1, 0, 0)">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
@@ -68,23 +65,31 @@
                             </div>
                             <div class="w-full max-w-full px-3 text-right shrink-0  md:flex-none">
 
-                                <div data-target="tooltip"
-                                    class="px-2 py-1 text-center text-white bg-black rounded-lg text-sm hidden"
-                                    role="tooltip"
-                                    style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(950px, -292px);"
-                                    data-popper-placement="top"> Edit Profile <div
-                                        class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                        data-popper-arrow=""
-                                        style="position: absolute; left: 0px; transform: translate(0px);"></div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="flex-auto p-4">
-                        @if (!true)
-                        @else
-                            <p class="leading-normal text-blue-500 text-center ">Write a bit about yourself</p>
-                        @endif
+                        <div x-show="!isEditing">
+                            @if ($bio)
+                                <p class="">{{ $bio }}</p>
+                            @else
+                                <p class="leading-normal text-blue-500 text-center ">Write a bit about yourself</p>
+                            @endif
+                        </div>
+                        <div x-show="isEditing" class="mt-4 space-y-2">
+                            <textarea class="w-full p-2 border rounded-md bg-white dark:bg-gray-800" wire:model="bio" rows="4"></textarea>
+                            <div class="justify-end flex gap-2 md:block">
+                                <button class="bg-gray-400 text-white px-4 py-2 rounded"
+                                    @click="isEditing = false">Cancel</button>
+                                <button class="bg-green-500 dark:bg-indigo-600 text-white px-4 py-2 rounded"
+                                    wire:click="saveBio">Save</button>
+
+                            </div>
+                        </div>
+
+
+
 
                         <hr class="h-px my-6 bg-gray-800 text-gray-800  from-transparent via-black/40 to-transparent"
                             style="color: black;border-color: rgb(31 41 55)">
@@ -228,7 +233,7 @@
 
                 <!-- List of Topics -->
                 <ul class="mt-4 space-y-4">
-                    @foreach ($user->topics as $topic)
+                    @foreach ($user->topics->take(5) as $topic)
                         <li
                             class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:shadow-md transition duration-200">
                             <!-- Topic Title and Publication Date -->
@@ -243,12 +248,12 @@
                             <!-- Topic Details -->
                             <div class="flex items-center justify-between mt-2">
                                 <!-- Views/Interactions Count -->
-                               <div class="text-sm flex justify-evenly gap-1 whitespace-nowrap ">
+                                <div class="text-sm flex justify-evenly gap-1 whitespace-nowrap ">
                                     <p class="text-gray-600 dark:text-indigo-500">{{ $topic->views }} views</p> |
                                     <p class="text-gray-600 dark:text-indigo-500">{{ $topic->likes_count }}
                                         {{ Str::plural('like', $topic->likes_count) }}</p> |
-                                        <p class="mr-4 text-gray-600 dark:text-indigo-500">{{ $topic->replies->count() }}
-                                        {{ Str::plural('comment',  $topic->replies->count()) }}</p>
+                                    <p class="mr-4 text-gray-600 dark:text-indigo-500">{{ $topic->replies->count() }}
+                                        {{ Str::plural('comment', $topic->replies->count()) }}</p>
 
                                 </div>
                                 <!-- View/Edit Links -->
@@ -257,6 +262,52 @@
                                         class="text-blue-500 dark:text-indigo-600 hover:underline">View</a>
                                     <span class="mx-2">|</span>
                                     <a href="{{ route('topic.edit', $topic->id) }}"
+                                        class="text-blue-500 dark:text-indigo-600 hover:underline">Edit</a>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+             {{-- topics section --}}
+            <div class="mt-8  w-full bg-white dark:bg-gray-900 p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2">Your Published
+                    Quiz</h3>
+
+                <!-- List of Topics -->
+                <ul class="mt-4 space-y-4">
+                    @foreach ($user->quizzes->take(5) as $quiz)
+                        <li
+                            class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:shadow-md transition duration-200">
+                            <!-- Topic Title and Publication Date -->
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xl capitalize font-medium text-gray-800 dark:text-gray-300">
+                                    {{ $quiz->title }}
+                                </h4>
+                                <span
+                                    class="text-sm text-gray-500 dark:text-indigo-500">{{ $quiz->created_at->format('F j, Y') }}</span>
+                            </div>
+
+                            <!-- Topic Details -->
+                            <div class="flex items-center justify-between mt-2">
+                                <!-- Views/Interactions Count -->
+                                <div class="md:text-sm text-xs flex justify-evenly gap-1 whitespace-nowrap ">
+                                     <span class="dark:text-gray-500">No of Questions:
+                                        <span class="dark:text-indigo-500">{{ count(json_decode($quiz->quiz)) }}
+                                        </span>
+                                    </span>
+                                    <span class="dark:text-gray-500">Time limit:
+                                        <span class="dark:text-indigo-500">{{ $quiz->time_limit }} mins </span>
+                                    </span>
+
+                                </div>
+                                <!-- View/Edit Links -->
+                                <div class="text-right text-sm md:text-base">
+                                    <a href="{{ route('quiz.single', $quiz->id) }}"
+                                        class="text-blue-500 dark:text-indigo-600 hover:underline">View</a>
+                                    <span class="mx-2">|</span>
+                                    <a href="{{ route('quiz.edit', $quiz->id) }}"
                                         class="text-blue-500 dark:text-indigo-600 hover:underline">Edit</a>
                                 </div>
                             </div>
@@ -281,9 +332,9 @@
                             </h4>
 
                             <!-- Additional Information -->
-                            <div class="grid grid-cols-2 justify-between  w-full mt-2">
+                            <div class="grid grid-cols-1 space-y-4 justify-between  w-full mt-2">
                                 <!-- Creation Date -->
-                                <div class="flex flex-col w-full gap-2 text-sm">
+                                <div class="flex flex-col w-full gap-2 text-sm mb-1">
                                     <span class="dark:text-gray-500 ">Created on:
                                         <span class="dark:text-indigo-500 whitespace-nowrap text-sm">
                                             {{ $quiz->created_at->format('F j, Y') }}
@@ -299,14 +350,23 @@
                                 </div>
 
 
+
                                 <!-- Quiz Statistics -->
                                 <div class="text-sm capitalize flex flex-col gap-2">
                                     <p><span class="font-semibold dark:text-gray-500">Taken:</span> <span
                                             class="dark:text-indigo-500"> {{ $quiz->timesTaken() }}
                                             {{ Str::plural('time', $quiz->timesTaken()) }}</span></p>
                                     <p><span class="font-semibold dark:text-gray-500">Average Score:</span> <span
-                                            class="dark:text-indigo-500">{{ $quiz->averageScore() }}%</span>
+                                            class="dark:text-indigo-500">{{ round($quiz->averageScore(),2) }}%</span>
                                     </p>
+                                     <!-- View/Edit Links -->
+                                <div class="text-right text-sm md:text-base">
+                                    <a href="{{ route('quiz.single', $quiz->id) }}"
+                                        class="text-blue-500 dark:text-indigo-600 hover:underline">View</a>
+                                    <span class="mx-2">|</span>
+                                    <a href="{{ route('quiz.edit', $quiz->id) }}"
+                                        class="text-blue-500 dark:text-indigo-600 hover:underline">Edit</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -373,16 +433,18 @@
                                 <div>
                                     <h4 class="text-xl capitalize font-bold text-gray-800 dark:text-gray-300">
                                         {{ $topic->title }}</h4>
-                                    <p class="text-sm text-gray-300 my-1">Category: <span class="dark:text-indigo-500"> {{ $topic->category->name }}
-                                    </span></p>
+                                    <p class="text-sm text-gray-300 my-1">Category: <span
+                                            class="dark:text-indigo-500"> {{ $topic->category->name }}
+                                        </span></p>
                                 </div>
                                 <span
                                     class="text-sm text-gray-500 mt-1 dark:text-indigo-400 font-bold">{{ $topic->created_at->format('F j, Y') }}</span>
                             </div>
-       <!-- Excerpt -->
-                            <div class="py-12 no-tailwin ql-editor line-clamp-5 !overflow-auto  !whitespace-normal !text-ellipsis  child:dark:text-gray-300 child:first-letter:capitalize first-letter:capitalize  dark:!text-gray-300  ">
+                            <!-- Excerpt -->
+                            <div
+                                class="py-12 no-tailwin ql-editor line-clamp-5 !overflow-auto  !whitespace-normal !text-ellipsis  child:dark:text-gray-300 child:first-letter:capitalize first-letter:capitalize  dark:!text-gray-300  ">
                                 {!! $topic->body !!}</div>
-                                  {{-- <div class="child:dark:text-gray-300  ">{!! $topic->body !!}</div> --}}
+                            {{-- <div class="child:dark:text-gray-300  ">{!! $topic->body !!}</div> --}}
                             <!-- Topic Details -->
                             <div class="flex items-center justify-between mt-2">
                                 <!-- Views/Interactions Count -->
@@ -390,8 +452,8 @@
                                     <p class="text-gray-600 dark:text-indigo-500">{{ $topic->views }} views</p> |
                                     <p class="text-gray-600 dark:text-indigo-500">{{ $topic->likes_count }}
                                         {{ Str::plural('like', $topic->likes_count) }}</p> |
-                                        <p class="mr-4 text-gray-600 dark:text-indigo-500">{{ $topic->replies->count() }}
-                                        {{ Str::plural('comment',  $topic->replies->count()) }}</p>
+                                    <p class="mr-4 text-gray-600 dark:text-indigo-500">{{ $topic->replies->count() }}
+                                        {{ Str::plural('comment', $topic->replies->count()) }}</p>
 
                                 </div>
 

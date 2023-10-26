@@ -30,4 +30,8 @@ class MainController extends Controller
 
         return view('user.profile',['user'=>$id]);
     }
+    public function showUserProfile(User $user)
+    {
+        return view('user.view-profile', compact('user'));
+    }
 }

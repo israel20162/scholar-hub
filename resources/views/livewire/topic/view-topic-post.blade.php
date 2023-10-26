@@ -28,9 +28,13 @@
           <!-- Topic Details -->
           <article class="mb-12">
               <header class=" flex items-baseline md:justify-between md:items-center mb-6">
-                  <span class="text-gray-600  w-full md:w-auto whitespace-nowrap md:whitespace-normal dark:text-gray-400  ">By: <span
-                          class="dark:text-indigo-600">
-                          {{ $topic->user->name }}</span>
+                  <span
+                      class="text-gray-600  w-full md:w-auto whitespace-nowrap md:whitespace-normal dark:text-gray-400  ">By:
+                      <x-view-profile-link user='{{$topic->user}}'>
+                          <span class="dark:text-indigo-600">
+                              {{ $topic->user->name }}
+                          </span>
+                      </x-view-profile-link>
                   </span>
                   <span class="md:flex grid grid-cols-1 justify-between w-full md:w-auto md:gap-2">
                       <span class="text-sm whitespace-nowrap text-gray-600 dark:text-gray-400">Category: <strong

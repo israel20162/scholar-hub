@@ -18,4 +18,8 @@ class QuizController extends Controller
     {
         return view('quiz.create');
     }
+     public function editQuiz($id)
+    {
+        return view('quiz.edit',['quizId'=>$id]);
+    }
 }

@@ -62,7 +62,7 @@
 
                       <!-- Thread Details -->
                       <div class="mt-2 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
-                          <span class="capitalize">By: {{ $topic->user->name }}</span>
+                        <x-view-profile-link user="{{$topic->user->id}}"> <span class="capitalize">By: {{ $topic->user->name }}</span></x-view-profile-link>
                           <p class="gap-2 flex"><span>{{ $topic->likes_count }} likes
                               </span><span>{{ $topic->replies->count() }} comments</span></p>
 
