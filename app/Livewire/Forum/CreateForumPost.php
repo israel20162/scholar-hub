@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Forum;
 
 use Livewire\Component;
 use App\Models\ForumPost;
@@ -43,6 +43,6 @@ class CreateForumPost extends Component
 
     public function render()
     {
-        return view('livewire.create-forum-post');
+        return view('livewire.forum.create-forum-post');
     }
 }

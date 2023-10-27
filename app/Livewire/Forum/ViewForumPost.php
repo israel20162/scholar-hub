@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Forum;
 
 
 use Livewire\Component;
@@ -68,6 +68,6 @@ class ViewForumPost extends Component
 
     public function render()
     {
-        return view('livewire.view-forum-post');
+        return view('livewire.forum.view-forum-post');
     }
 }

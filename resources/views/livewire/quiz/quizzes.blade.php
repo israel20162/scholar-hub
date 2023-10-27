@@ -50,20 +50,25 @@
 
                     <!-- Thread Details -->
                     <div class="mt-2 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
-                        <span class="capitalize">By: @if ($quiz->user)
-                                {{ $quiz->user->name }}
+
+                        <span class="capitalize ">By: @if ($quiz->user)
+                                <x-view-profile-link user="{{ $quiz->user_id }}">
+                                    <span class="dark:text-indigo-600">
+                                        {{ $quiz->user->name }}
+                                    </span>
+                                </x-view-profile-link>
                             @else
                                 [Deleted Account]
                             @endif
                         </span>
                         <div class="gap-2 md:flex grid grid-cols-1 items-baseline">
-                         <span class="dark:text-gray-500">No of Questions:
-                            <span class="dark:text-indigo-500">{{ count(json_decode($quiz->quiz)) }}
+                            <span class="dark:text-gray-500">No of Questions:
+                                <span class="dark:text-indigo-500">{{ count(json_decode($quiz->quiz)) }}
+                                </span>
                             </span>
-                        </span>
-                        <span class="dark:text-gray-500">Time limit:
-                            <span class="dark:text-indigo-500">{{ $quiz->time_limit }} mins </span>
-                        </span>
+                            <span class="dark:text-gray-500">Time limit:
+                                <span class="dark:text-indigo-500">{{ $quiz->time_limit }} mins </span>
+                            </span>
                         </div>
 
 

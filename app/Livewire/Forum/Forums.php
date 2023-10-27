@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Forum;
 
 use App\Models\ForumPost;
 //use Livewire\Attributes\On;
@@ -22,7 +22,7 @@ class Forums extends Component
     {
         $posts = $this->fetchPosts();
 
-        return view('livewire.forums', ['posts' => $posts]);
+        return view('livewire.forum.forums', ['posts' => $posts]);
     }
 
     public function fetchPosts()

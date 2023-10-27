@@ -51,6 +51,6 @@
         @else
             <p class="text-gray-500">No notes have been uploaded yet.</p>
         @endif
-{{$notes->links()}}
+        {{ $notes->links() }}
     </div>
 </div>

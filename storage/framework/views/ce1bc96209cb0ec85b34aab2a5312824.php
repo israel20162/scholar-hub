@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title><?php echo e(config('app.name', 'Laravel')); ?></title>
+    <title><?php echo e('Scholars Hub'); ?></title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -32,7 +32,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('navigation-menu');
 
-$__html = app('livewire')->mount($__name, $__params, 'xlC5was', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'Pcoyd82', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 

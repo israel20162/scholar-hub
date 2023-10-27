@@ -19,7 +19,7 @@ class MainController extends Controller
         $latestForumPosts = ForumPost::latest()->orderBy('likes_count', 'desc')->take(3)->get();
         $users = User::get();
         $newUsers = User::whereDate('created_at', '>=', Carbon::now()->subWeek())->get()->count();
-        return view('home', ['users' => $users, 'newUserCount' => $newUsers, 'topicCount' => Topic::count(), 'quizCount' => Quiz::count(), 'topics' => $trendingTopics, 'quizzes' => $latestQuizzes, 'forumPosts' => $latestForumPosts]);
+        return view('Home', ['title'=>'Scholars Hub','users' => $users, 'newUserCount' => $newUsers, 'topicCount' => Topic::count(), 'quizCount' => Quiz::count(), 'topics' => $trendingTopics, 'quizzes' => $latestQuizzes, 'forumPosts' => $latestForumPosts]);
     }
 
     /**
